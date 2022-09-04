@@ -25,20 +25,7 @@ namespace Full_GRASP_And_SOLID
             recipe.FinalProduct = GetProduct("Café con leche");
             recipe.AddStep(new Step(GetProduct("Café"), 100, GetEquipment("Cafetera"), 120));
             recipe.AddStep(new Step(GetProduct("Leche"), 200, GetEquipment("Hervidor"), 60));
-            PrintRecipe(recipe);
-        }
-
-        //Se retira el método PrintRecipe de la clase Recipe ya que si se quisiera cambiar el formato
-        //de cómo se imprime la receta, habría que cambiar esa clase, y la misma ya tiene otra responsabilidad.
-        public static void PrintRecipe(Recipe recipe)
-        {
-            Console.WriteLine($"Receta de {recipe.FinalProduct.Description}:");
-            foreach (Step step in recipe.steps)
-            {
-                Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
-                    $"usando '{step.Equipment.Description}' durante {step.Time} segundos.");
-            }
-            Console.WriteLine($"Costo total: ${recipe.GetProductionCost()}");
+            new ConsolePrinter(recipe);
         }
 
         private static void PopulateCatalogs()
