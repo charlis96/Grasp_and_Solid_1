@@ -11,7 +11,7 @@ namespace Full_GRASP_And_SOLID.Library
 {
     public class Recipe
     {
-        private ArrayList steps = new ArrayList();
+        public ArrayList steps { get; } = new ArrayList();
 
         public Product FinalProduct { get; set; }
 
@@ -25,14 +25,22 @@ namespace Full_GRASP_And_SOLID.Library
             this.steps.Remove(step);
         }
 
-        public void PrintRecipe()
+        /*
+        La clase Recipe es la que contiene toda la información necesaria para calcular el costo total
+        de la receta, es la "experta". Por el principio Expert, debería ser la responsable de calcular
+        el costo total.
+
+        Con el siguiente método se calcula el costo total, el cual consiste en realizar la sumatoria
+        de los subtotales de cada paso de la receta.
+        */
+        public double GetProductionCost()
         {
-            Console.WriteLine($"Receta de {this.FinalProduct.Description}:");
+            double total = 0;
             foreach (Step step in this.steps)
             {
-                Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
-                    $"usando '{step.Equipment.Description}' durante {step.Time}");
+                total += step.GetSubTotal();
             }
+            return total;
         }
     }
 }
